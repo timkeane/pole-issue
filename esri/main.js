@@ -14,7 +14,7 @@ const pole = proj4('EPSG:2263', 'EPSG:4326', [994949, 149776]);
 const point = {
   type: 'point',
   longitude: pole[0],
-  latitude:pole[1]
+  latitude: pole[1]
 };
 const pointGraphic = new Graphic({
   geometry: point,
@@ -46,7 +46,7 @@ const map = new Map({});
 const view = new MapView({
   container: 'map',
   map,
-  center: [pole[1], pole[0]],
+  center: pole,
   zoom: 18
 });
 
