@@ -17,14 +17,14 @@ proj4.defs([
 ]);
 register(proj4);
 
-const pole = proj4('EPSG:2263', 'EPSG:3857', [994949, 149776]);
+const point = proj4('EPSG:2263', 'EPSG:3857', [994949, 149776]);
 const view = new View({
-  center: pole,
-  zoom: 18
+  center: point,
+  zoom: 22
 });
-const feature = new Feature({geometry: new Point(pole)});
+const feature = new Feature({geometry: new Point(point)});
 const source = new Source({});
-const layer = new Layer({source});
+const pole = new Layer({source});
 source.addFeature(feature);
 
 const sidewalk = new Layer({
@@ -32,9 +32,25 @@ const sidewalk = new Layer({
     format: new GeoJSON({
       dataProjection: 'EPSG:2263',
       featureProjection: 'EPSG:3857'
-    
     }),
     url: './sidewalk.json'
+  }),
+  style: new Style({
+    stroke: new Stroke({
+      width: 1,
+      lineDash: [5, 5],
+      color: 'black'
+    })
+  })
+});
+
+const building = new Layer({
+  source: new Source({
+    format: new GeoJSON({
+      dataProjection: 'EPSG:2263',
+      featureProjection: 'EPSG:3857'
+    }),
+    url: './building.json'
   }),
   style: new Style({
     stroke: new Stroke({
@@ -51,5 +67,6 @@ olms(
 ).then(function (map) {
   map.setView(view);
   map.addLayer(sidewalk);
-  map.addLayer(layer);
+  map.addLayer(building);
+  map.addLayer(pole);
 });
