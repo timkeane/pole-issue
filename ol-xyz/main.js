@@ -30,7 +30,7 @@ const map = new Map({
     new TileLayer({
       source: new XYZ({
         url: 'https://maps{1-4}.nyc.gov/xyz/1.0.0/carto/basemap/{z}/{x}/{y}.jpg'
-      }),
+      })
     }),
     layer
   ],

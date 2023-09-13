@@ -4,6 +4,7 @@ import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer';
 import Graphic from '@arcgis/core/Graphic';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer';
+import WebTileLayer from '@arcgis/core/layers/WebTileLayer';
 import proj4 from 'proj4';
 
 proj4.defs([
@@ -51,6 +52,11 @@ const building = new GeoJSONLayer({
   url: './building.json'
 });
 
+const image = new WebTileLayer({
+  visible: false,
+  urlTemplate: 'https://tiles.arcgis.com/tiles/yG5s3afENB5iO9fj/arcgis/rest/services/NYC_Orthos_-_2020/MapServer/tile/{z}/{y}/{x}'
+});
+
 const map = new Map({});
 const view = new MapView({
   container: 'map',
@@ -60,6 +66,15 @@ const view = new MapView({
 });
 
 map.add(base);
+map.add(image);
 map.add(graphicsLayer);
 map.add(sidewalk);
 map.add(building);
+
+document.getElementById('img').addEventListener(
+  'click', 
+  e => {
+    image.visible = !image.visible;
+    view.setZoom(20);
+  }
+);

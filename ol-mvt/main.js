@@ -1,5 +1,7 @@
 import FullScreen from 'ol/control/FullScreen.js';
 import olms from 'ol-mapbox-style';
+import XYZ from 'ol/source/XYZ.js';
+import TileLayer from 'ol/layer/Tile.js';
 import View from 'ol/View.js';
 import Source from 'ol/source/Vector';
 import Layer from 'ol/layer/Vector';
@@ -61,12 +63,29 @@ const building = new Layer({
   })
 });
 
+const image = new TileLayer({
+  source: new XYZ({
+    url: 'https://tiles.arcgis.com/tiles/yG5s3afENB5iO9fj/arcgis/rest/services/NYC_Orthos_-_2020/MapServer/tile/{z}/{y}/{x}'
+  }),
+  visible: false
+});
+
+
 olms(
   'map',
   'https://www.arcgis.com/sharing/rest/content/items/2ee3ac7f481548c88d53ea50268525e7/resources/styles/root.json?f=json'
 ).then(function (map) {
   map.setView(view);
+  map.addLayer(image);
   map.addLayer(sidewalk);
   map.addLayer(building);
   map.addLayer(pole);
 });
+
+document.getElementById('img').addEventListener(
+  'click', 
+  e => {
+    image.setVisible(!image.getVisible());
+    view.setZoom(20);
+  }
+);
