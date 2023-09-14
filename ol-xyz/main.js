@@ -6,6 +6,7 @@ import Source from 'ol/source/Vector';
 import Layer from 'ol/layer/Vector';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
+import {register} from 'ol/proj/proj4';
 import proj4 from 'proj4';
 
 proj4.defs([
