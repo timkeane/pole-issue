@@ -69,7 +69,6 @@ const image = new TileLayer({
   visible: false
 });
 
-
 olms(
   'map',
   'https://www.arcgis.com/sharing/rest/content/items/2ee3ac7f481548c88d53ea50268525e7/resources/styles/root.json?f=json'
