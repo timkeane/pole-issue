@@ -71,7 +71,7 @@ const image = new TileLayer({
 
 olms(
   'map',
-  'https://www.arcgis.com/sharing/rest/content/items/2ee3ac7f481548c88d53ea50268525e7/resources/styles/root.json?f=json'
+  'https://www.arcgis.com/sharing/rest/content/items/df7862bfd7984baab51ff9df8e214278/resources/styles/root.json?f=json'
 ).then(function (map) {
   map.setView(view);
   map.addLayer(image);
@@ -84,6 +84,6 @@ document.getElementById('img').addEventListener(
   'click', 
   e => {
     image.setVisible(!image.getVisible());
-    view.setZoom(20);
+    // view.setZoom(20);
   }
 );
