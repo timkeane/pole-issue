@@ -138,10 +138,13 @@ const osmVector = new VectorTileLayer({
   ]
 });
 
+let mvt;
 olms(
   'map',
   'https://www.arcgis.com/sharing/rest/content/items/df7862bfd7984baab51ff9df8e214278/resources/styles/root.json?f=json'
 ).then(function (map) {
+  const layers = map.getLayers().getArray();
+  mvt = layers[layers.length - 1];
   map.setView(view);
   map.addLayer(image);
   map.addLayer(osmVector);
@@ -162,6 +165,7 @@ document.getElementById('osmv').addEventListener(
   'click', 
   e => {
     osmVector.setVisible(!osmVector.getVisible());
+    mvt.setVisible(!mvt.getVisible());
     view.setZoom(17); //max for osm
   }
 );
