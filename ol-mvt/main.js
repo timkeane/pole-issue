@@ -84,6 +84,6 @@ document.getElementById('img').addEventListener(
   'click', 
   e => {
     image.setVisible(!image.getVisible());
-    // view.setZoom(20);
+    view.setZoom(20);
   }
 );
