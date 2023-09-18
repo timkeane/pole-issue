@@ -9,6 +9,9 @@
 # ol-mvt with aerial imagery
 ![ol-mvt with aerial imagery](ol-mvt/ol-mvt-aerial.PNG)
 
+# osm-vector
+![osm-vector](ol-mvt/osm-vector.PNG)
+
 # esri-mvt
 ![esri-mvt](esri-mvt/esri-mvt.PNG)
 
