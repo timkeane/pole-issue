@@ -1,14 +1,17 @@
 import olms from 'ol-mapbox-style';
 import XYZ from 'ol/source/XYZ';
 import TileLayer from 'ol/layer/Tile';
+import VectorTileLayer from 'ol/layer/VectorTile';
 import View from 'ol/View';
 import Source from 'ol/source/Vector';
+import VectorTileSource from 'ol/source/VectorTile';
 import Layer from 'ol/layer/Vector';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import proj4 from 'proj4';
 import {register} from 'ol/proj/proj4';
 import GeoJSON from 'ol/format/GeoJSON';
+import TopoJSON from 'ol/format/TopoJSON';
 import Style from 'ol/style/Style';
 import Stroke from 'ol/style/Stroke';
 
@@ -69,12 +72,79 @@ const image = new TileLayer({
   visible: false
 });
 
+const osmVector = new VectorTileLayer({
+  visible: false,
+  source: new VectorTileSource({
+    attributions:
+      '&copy; OpenStreetMap contributors, Who’s On First, ' +
+      'Natural Earth, and osmdata.openstreetmap.de',
+    format: new TopoJSON({
+      layerName: 'layer',
+      layers: ['water', 'roads', 'buildings'],
+    }),
+    url:
+      'https://tile.nextzen.org/tilezen/vector/v1/all/{z}/{x}/{y}.topojson?api_key=' +
+      '6PZmA5oqQvGukqAKyokKKQ',
+  }),
+  style: [
+    {
+      filter: ['==', ['get', 'layer'], 'water'],
+      style: {
+        'fill-color': '#9db9e8'
+      }
+    },
+    {
+      else: true,
+      filter: ['all', ['==', ['get', 'layer'], 'roads'], ['get', 'railway']],
+      style: {
+        'stroke-color': '#7de',
+        'stroke-width': 1,
+        'z-index': ['number', ['get', 'sort_key'], 0]
+      }
+    },
+    {
+      else: true,
+      filter: ['==', ['get', 'layer'], 'roads'],
+      style: {
+        'stroke-color': [
+          'match',
+          ['get', 'kind'],
+          'major_road',
+          '#776',
+          'minor_road',
+          '#ccb',
+          'highway',
+          '#f39',
+          'none'
+        ],
+        'stroke-width': ['match', ['get', 'kind'], 'highway', 1.5, 1],
+        'z-index': ['number', ['get', 'sort_key'], 0]
+      },
+    },
+    {
+      else: true,
+      filter: [
+        'all',
+        ['==', ['get', 'layer'], 'buildings'],
+        ['<', ['resolution'], 10]
+      ],
+      style: {
+        'fill-color': '#6666',
+        'stroke-color': '#4446',
+        'stroke-width': 1,
+        'z-index': ['number', ['get', 'sort_key'], 0]
+      }
+    }
+  ]
+});
+
 olms(
   'map',
   'https://www.arcgis.com/sharing/rest/content/items/df7862bfd7984baab51ff9df8e214278/resources/styles/root.json?f=json'
 ).then(function (map) {
   map.setView(view);
   map.addLayer(image);
+  map.addLayer(osmVector);
   map.addLayer(sidewalk);
   map.addLayer(building);
   map.addLayer(pole);
@@ -84,6 +154,14 @@ document.getElementById('img').addEventListener(
   'click', 
   e => {
     image.setVisible(!image.getVisible());
-    view.setZoom(20);
+    view.setZoom(20); //max for image
+  }
+);
+
+document.getElementById('osmv').addEventListener(
+  'click', 
+  e => {
+    osmVector.setVisible(!osmVector.getVisible());
+    view.setZoom(17); //max for osm
   }
 );
