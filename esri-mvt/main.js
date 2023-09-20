@@ -38,7 +38,7 @@ const base = new VectorTileLayer({
     sources: {
       esri: {
         type: 'vector',
-        url: 'https://www.arcgis.com/sharing/rest/content/items/2ee3ac7f481548c88d53ea50268525e7/resources/styles/root.json?f=json'
+          url: 'https://www.arcgis.com/sharing/rest/content/items/df7862bfd7984baab51ff9df8e214278/resources/styles/root.json?f=json'
       }
     }
   }
