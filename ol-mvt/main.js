@@ -84,7 +84,7 @@ const osmVector = new VectorTileLayer({
     }),
     url:
       'https://tile.nextzen.org/tilezen/vector/v1/all/{z}/{x}/{y}.topojson?api_key=' +
-      '6PZmA5oqQvGukqAKyokKKQ',
+      '6PZmA5oqQvGukqAKyokKKQ', // this key will only work if page is served on http://localhost:5173/
   }),
   style: [
     {
